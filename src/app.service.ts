@@ -9,7 +9,7 @@ export class AppService {
   async getCovidData(query: DTO.GetCovidDataReqQueryDTO) {
     try {
       const urlParams = new URLSearchParams(
-        `serviceKey=${encodeURI(process.env.OPEN_API_KEY)}`,
+        `serviceKey=${process.env.OPEN_API_KEY}`,
       );
 
       for (const key of Object.keys(query)) {
@@ -20,16 +20,15 @@ export class AppService {
       const openAPIResult = await this.httpService.get(url);
       const result = await lastValueFrom(openAPIResult);
 
-      if (result?.data && result.data?.response?.header?.resultCode == 0) {
+      if (result?.data && result.data?.response?.header?.resultCode == '00') {
         return {
-          data: result.data,
+          data: result.data.response.body,
           code: HttpStatus.OK,
           message: 'Open API 데이터 조회 성공',
         };
       }
 
       return {
-        data: null,
         code: HttpStatus.CONFLICT,
         message:
           result?.data?.response?.header?.resultMsg ??
