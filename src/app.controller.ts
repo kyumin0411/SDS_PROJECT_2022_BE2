@@ -9,7 +9,10 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @ApiOperation({ summary: '코로나 19 감염 현황 데이터 조회' })
+  @ApiOperation({
+    summary: '코로나 19 감염 현황 데이터 조회',
+    description: 'https://www.data.go.kr/index.do',
+  })
   async getCovidData(
     @Query() query: DTO.GetCovidDataReqQueryDTO,
     @Res() res: Response,
