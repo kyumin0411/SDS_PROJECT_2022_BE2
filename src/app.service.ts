@@ -17,7 +17,7 @@ export class AppService {
       }
 
       const url = process.env.OPEN_API_END_POINT + '?' + urlParams;
-      const openAPIResult = await this.httpService.get(url);
+      const openAPIResult = this.httpService.get(url);
       const result = await lastValueFrom(openAPIResult);
 
       if (result?.data && result.data?.response?.header?.resultCode == '00') {
